@@ -4,7 +4,7 @@
 	"version": "0.1.5",
 	"minAppVersion": "1.4.0",
 	"description": "Adds a minimal graph search bar for temporary note highlights, colored neighbors, neutral graph context, and reusable highlight sets.",
-	"author": "vibecoder68",
-	"authorUrl": "https://github.com/vibecoder68",
+	"author": "",
+	"authorUrl": "",
 	"isDesktopOnly": false
 }
