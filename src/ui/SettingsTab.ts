@@ -187,6 +187,32 @@ export class GraphSpotlightSettingTab extends PluginSettingTab {
 			});
 
 		new Setting(containerEl)
+			.setName("Crowded note threshold")
+			.setDesc("Notes affected by this many highlights use the crowded note color instead of a blended color.")
+			.addSlider((slider) => {
+				slider
+					.setLimits(2, 10, 1)
+					.setDynamicTooltip()
+					.setValue(this.plugin.settings.crowdedNoteThreshold)
+					.onChange(async (value) => {
+						this.plugin.settings.crowdedNoteThreshold = value;
+						await this.plugin.saveSettings();
+						this.plugin.applyHighlights();
+					});
+			});
+
+		new Setting(containerEl)
+			.setName("Crowded note color")
+			.setDesc("White is the default so notes touched by many highlight groups stand out clearly.")
+			.addColorPicker((picker) => {
+				picker.setValue(this.plugin.settings.crowdedNoteColor).onChange(async (value) => {
+					this.plugin.settings.crowdedNoteColor = normalizeHexColor(value) ?? this.plugin.settings.crowdedNoteColor;
+					await this.plugin.saveSettings();
+					this.plugin.applyHighlights();
+				});
+			});
+
+		new Setting(containerEl)
 			.setName("Highlighted link opacity")
 			.setDesc("Used only when graph link coloring is enabled.")
 			.addSlider((slider) => {

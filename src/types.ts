@@ -42,6 +42,8 @@ export interface GraphSpotlightSettings {
 	unrelatedNodeOpacity: number;
 	unrelatedLinkOpacity: number;
 	colorLinks: boolean;
+	crowdedNoteThreshold: number;
+	crowdedNoteColor: string;
 	connectedNodeOpacity: number;
 	connectedNodeDullness: number;
 	edgeOpacity: number;
@@ -81,6 +83,8 @@ export const DEFAULT_SETTINGS: GraphSpotlightSettings = {
 	unrelatedNodeOpacity: 1,
 	unrelatedLinkOpacity: 0.62,
 	colorLinks: false,
+	crowdedNoteThreshold: 3,
+	crowdedNoteColor: "#ffffff",
 	connectedNodeOpacity: 0.86,
 	connectedNodeDullness: 0.34,
 	edgeOpacity: 0.9,
@@ -114,6 +118,8 @@ export interface GraphRendererAdapterSettings {
 	unrelatedNodeOpacity: number;
 	unrelatedLinkOpacity: number;
 	colorLinks: boolean;
+	crowdedNoteThreshold: number;
+	crowdedNoteColor: string;
 	connectedNodeOpacity: number;
 	connectedNodeDullness: number;
 	edgeOpacity: number;

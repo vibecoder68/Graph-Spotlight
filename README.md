@@ -26,7 +26,7 @@ After Graph Spotlight is approved in Obsidian's Community plugins directory:
 
 ### Manual install
 
-1. Download `graph-spotlight-0.1.5-local-install.zip` from the release assets.
+1. Download `graph-spotlight-0.1.6-local-install.zip` from the release assets.
 2. Unzip it into `<Vault>/.obsidian/plugins/`.
 3. Confirm the folder path is `<Vault>/.obsidian/plugins/graph-spotlight/`.
 4. In Obsidian, open Settings -> Community plugins, reload plugins if needed, and enable Graph Spotlight.
@@ -61,3 +61,5 @@ Highlight additions, removals, color changes, and saved-set loads request one gr
 User-triggered highlight updates run on the next animation frame and nudge the graph after the first styling chunk, so color changes appear quickly while large graphs continue updating in small slices.
 
 Search suggestions are debounced and use a cached note index. Bottom overlay placements automatically show chips and suggestions above the search bar.
+
+By default, notes affected by three or more active highlights turn white instead of blending many colors together. The threshold and crowded-note color are configurable.

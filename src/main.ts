@@ -114,6 +114,8 @@ export default class GraphSpotlightPlugin extends Plugin {
 				legacy?.unrelatedLinkOpacity ??
 				(typeof legacy?.dimOpacity === "number" ? Math.max(0.2, legacy.dimOpacity * 1.8) : DEFAULT_SETTINGS.unrelatedLinkOpacity),
 			colorLinks: loaded?.colorLinks ?? DEFAULT_SETTINGS.colorLinks,
+			crowdedNoteThreshold: Math.max(2, loaded?.crowdedNoteThreshold ?? DEFAULT_SETTINGS.crowdedNoteThreshold),
+			crowdedNoteColor: normalizeHexColor(loaded?.crowdedNoteColor ?? "") ?? DEFAULT_SETTINGS.crowdedNoteColor,
 			vibrantColors: sanitizeColorPool(loaded?.vibrantColors) ?? [...DEFAULT_SETTINGS.vibrantColors],
 			savedSets: Array.isArray(loaded?.savedSets) ? loaded.savedSets : [],
 		};
@@ -459,6 +461,8 @@ export default class GraphSpotlightPlugin extends Plugin {
 			unrelatedNodeOpacity: this.settings.unrelatedNodeOpacity,
 			unrelatedLinkOpacity: this.settings.unrelatedLinkOpacity,
 			colorLinks: this.settings.colorLinks,
+			crowdedNoteThreshold: this.settings.crowdedNoteThreshold,
+			crowdedNoteColor: this.settings.crowdedNoteColor,
 			connectedNodeOpacity: this.settings.connectedNodeOpacity,
 			connectedNodeDullness: this.settings.connectedNodeDullness,
 			edgeOpacity: this.settings.edgeOpacity,

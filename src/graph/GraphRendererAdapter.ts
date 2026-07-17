@@ -166,11 +166,19 @@ export class GraphRendererAdapter {
 		const connected = nodePath ? state.connectedByPath.get(nodePath) : undefined;
 
 		if (highlighted && highlighted.length > 0) {
+			if (highlighted.length >= settings.crowdedNoteThreshold) {
+				setNodeColor(node, settings.crowdedNoteColor, 1);
+				return;
+			}
 			setNodeColor(node, mixHexColors(highlighted.map((entry) => entry.color)), 1);
 			return;
 		}
 
 		if (connected && connected.length > 0) {
+			if (connected.length >= settings.crowdedNoteThreshold) {
+				setNodeColor(node, settings.crowdedNoteColor, settings.connectedNodeOpacity);
+				return;
+			}
 			const baseColor = mixHexColors(connected.map((entry) => entry.color));
 			const softened = softenColor(baseColor, settings.connectedNodeDullness);
 			setNodeColor(node, softened, settings.connectedNodeOpacity);
