@@ -12,7 +12,7 @@
 		"obsidian-plugin",
 		"graph"
 	],
-	"author": "",
+	"author": "vibecoder68",
 	"license": "MIT",
 	"devDependencies": {
 		"@types/node": "^20.11.30",
