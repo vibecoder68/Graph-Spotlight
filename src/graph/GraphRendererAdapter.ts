@@ -57,13 +57,13 @@ export class GraphRendererAdapter {
 		includeLeaf: (leaf: WorkspaceLeaf) => boolean = () => true,
 		requestGraphRender = false,
 	): void {
-		const runId = ++this.styleRunId;
+		this.styleRunId += 1;
 		if (state.hasHighlights) this.ensurePathLookup();
 
 		this.app.workspace.iterateAllLeaves((leaf) => {
 			if (!isSupportedGraphLeaf(leaf)) return;
 			if (!includeLeaf(leaf)) return;
-			const renderer = getRendererFromView(leaf.view as GraphViewLike);
+			const renderer = getRendererFromView(getGraphView(leaf));
 			if (!renderer) return;
 			const target = getGraphContainer(leaf);
 			if (target) this.rendererTargets.set(renderer, target);
@@ -333,13 +333,13 @@ export class GraphRendererAdapter {
 }
 
 export function isSupportedGraphLeaf(leaf: WorkspaceLeaf): boolean {
-	const view = leaf.view as GraphViewLike;
+	const view = getGraphView(leaf);
 	const type = view?.getViewType?.();
 	return type === "graph" || type === "localgraph";
 }
 
 export function graphViewEnabled(leaf: WorkspaceLeaf, globalEnabled: boolean, localEnabled: boolean): boolean {
-	const view = leaf.view as GraphViewLike;
+	const view = getGraphView(leaf);
 	const type = view?.getViewType?.();
 	if (type === "graph") return globalEnabled;
 	if (type === "localgraph") return localEnabled;
@@ -347,10 +347,15 @@ export function graphViewEnabled(leaf: WorkspaceLeaf, globalEnabled: boolean, lo
 }
 
 export function getGraphContainer(leaf: WorkspaceLeaf): HTMLElement | null {
-	const view = leaf.view as GraphViewLike;
+	const view = getGraphView(leaf);
 	const container = view.contentEl ?? view.containerEl ?? null;
 	if (!container) return null;
-	return (container.querySelector(".graph-view") as HTMLElement | null) ?? container;
+	const graphView = container.querySelector<HTMLElement>(".graph-view");
+	return graphView ?? container;
+}
+
+function getGraphView(leaf: WorkspaceLeaf): GraphViewLike {
+	return leaf.view;
 }
 
 function getRendererFromView(view: GraphViewLike): GraphRendererLike | null {
@@ -401,7 +406,7 @@ function extractNodePath(node: GraphObject): string | null {
 	const getDisplayText = node.getDisplayText;
 	if (typeof getDisplayText === "function") {
 		try {
-			const displayText = getDisplayText.call(node);
+			const displayText: unknown = Reflect.apply(getDisplayText, node, []);
 			if (typeof displayText === "string") return normalizeGraphPath(displayText);
 		} catch {
 			return null;

@@ -1,4 +1,4 @@
-import { Menu, Notice, setIcon, WorkspaceLeaf } from "obsidian";
+import { Menu, setIcon, WorkspaceLeaf } from "obsidian";
 import type GraphSpotlightPlugin from "../main";
 import { FileSuggestion, HighlightEntry } from "../types";
 
@@ -56,12 +56,12 @@ export class GraphOverlay {
 		});
 
 		this.listen(this.inputEl, "input", () => this.scheduleSuggestions());
-		this.listen(this.inputEl, "keydown", (event) => this.handleInputKeydown(event as KeyboardEvent));
+		this.listen(this.inputEl, "keydown", (event) => this.handleInputKeydown(event));
 		this.listen(this.inputEl, "blur", () => {
 			window.setTimeout(() => this.hideSuggestions(), 120);
 		});
 		this.listen(clearButton, "click", () => this.plugin.clearHighlights());
-		this.listen(menuButton, "click", (event) => this.openMenu(event as MouseEvent));
+		this.listen(menuButton, "click", (event) => this.openMenu(event));
 
 		this.updateFromSettings();
 		this.refresh();

@@ -10,7 +10,7 @@ Use this checklist when you are ready to make Graph Spotlight available in Obsid
 
 ## Local Install Test
 
-1. Unzip `outputs/graph-spotlight-0.1.6-local-install.zip`.
+1. Unzip `outputs/graph-spotlight-0.1.7-local-install.zip`.
 2. Put the `graph-spotlight` folder into `<Vault>/.obsidian/plugins/`.
 3. In Obsidian, open Settings -> Community plugins.
 4. Turn off Restricted mode if needed.
@@ -20,7 +20,7 @@ Use this checklist when you are ready to make Graph Spotlight available in Obsid
 ## GitHub Release
 
 1. Commit the source repository with `manifest.json`, `README.md`, and `LICENSE` at the root.
-2. Create a GitHub release whose tag is exactly `0.1.6`.
+2. Create a GitHub release whose tag is exactly `0.1.7`.
 3. Upload these files as individual release assets, not inside a zip:
    - `main.js`
    - `manifest.json`
@@ -28,7 +28,7 @@ Use this checklist when you are ready to make Graph Spotlight available in Obsid
 
 The release tag must match the `version` in `manifest.json`.
 
-Do not rely on `graph-spotlight-0.1.6-release-assets.zip` for the Obsidian validator. The zip is only a convenient way to move the files around; the GitHub Release itself must show `main.js`, `manifest.json`, and `styles.css` as separate attached assets.
+Do not rely on `graph-spotlight-0.1.7-release-assets.zip` for the Obsidian validator. The zip is only a convenient way to move the files around; the GitHub Release itself must show `main.js`, `manifest.json`, and `styles.css` as separate attached assets.
 
 ## Submit to Obsidian
 

@@ -1,6 +1,6 @@
 {
 	"name": "obsidian-graph-spotlight",
-	"version": "0.1.6",
+	"version": "0.1.7",
 	"description": "Search-driven temporary highlights for Obsidian graph view notes and their connections.",
 	"main": "main.js",
 	"scripts": {
@@ -16,7 +16,6 @@
 	"license": "MIT",
 	"devDependencies": {
 		"@types/node": "^20.11.30",
-		"builtin-modules": "^3.3.0",
 		"esbuild": "^0.25.0",
 		"obsidian": "latest",
 		"typescript": "^5.8.3"

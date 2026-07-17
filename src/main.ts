@@ -10,7 +10,6 @@ import {
 	GraphRendererAdapterSettings,
 	GraphSpotlightSettings,
 	HighlightEntry,
-	SavedHighlightSet,
 } from "./types";
 import { normalizeHexColor, pickVibrantColor } from "./utils/colors";
 import { createId, pluralize } from "./utils/dom";
@@ -30,6 +29,11 @@ interface SearchRecord {
 	basename: string;
 	path: string;
 }
+
+type LegacyGraphSpotlightSettings = Partial<GraphSpotlightSettings> & {
+	dimUnrelated?: boolean;
+	dimOpacity?: number;
+};
 
 export default class GraphSpotlightPlugin extends Plugin {
 	settings: GraphSpotlightSettings = { ...DEFAULT_SETTINGS, vibrantColors: [...DEFAULT_SETTINGS.vibrantColors] };
@@ -53,18 +57,18 @@ export default class GraphSpotlightPlugin extends Plugin {
 		this.addSettingTab(new GraphSpotlightSettingTab(this.app, this));
 
 		this.addCommand({
-			id: "clear-graph-spotlights",
-			name: "Clear graph spotlights",
+			id: "clear-spotlights",
+			name: "Clear spotlights",
 			callback: () => this.clearHighlights(),
 		});
 		this.addCommand({
-			id: "save-current-graph-spotlights",
-			name: "Save current graph spotlight set",
+			id: "save-current-set",
+			name: "Save current spotlight set",
 			callback: () => this.promptSaveCurrentSet(),
 		});
 		this.addCommand({
-			id: "reload-graph-spotlight-renderer",
-			name: "Refresh graph spotlight rendering",
+			id: "refresh-rendering",
+			name: "Refresh spotlight rendering",
 			callback: () => this.refreshGraphViews(),
 		});
 
@@ -100,10 +104,8 @@ export default class GraphSpotlightPlugin extends Plugin {
 	}
 
 	async loadSettings(): Promise<void> {
-		const loaded = (await this.loadData()) as Partial<GraphSpotlightSettings> | null;
-		const legacy = loaded as
-			| (Partial<GraphSpotlightSettings> & { dimUnrelated?: boolean; dimOpacity?: number })
-			| null;
+		const loaded = normalizeLoadedSettings(await this.loadData());
+		const legacy = loaded;
 		this.settings = {
 			...DEFAULT_SETTINGS,
 			...(loaded ?? {}),
@@ -476,6 +478,11 @@ function sanitizeColorPool(colors: string[] | undefined): string[] | null {
 		.map((color) => normalizeHexColor(color))
 		.filter((color): color is string => color !== null);
 	return normalized.length > 0 ? Array.from(new Set(normalized)) : null;
+}
+
+function normalizeLoadedSettings(value: unknown): LegacyGraphSpotlightSettings | null {
+	if (!value || typeof value !== "object" || Array.isArray(value)) return null;
+	return value as LegacyGraphSpotlightSettings;
 }
 
 function normalizeSearch(value: string): string {
